@@ -18,13 +18,11 @@ def get_custom_user_list(request):
         paginator = PageNumberPagination()
         paginator.page_size = 5
         result_page = paginator.paginate_queryset(acc, request)
-        serialize = custom_userSerializer(result_page , many = True)
+        serialize = custom_userSerializer(result_page , many = True )
         return paginator.get_paginated_response(serialize.data)
 
     elif request.method == "POST":
-        print("I am in line 22")
         serialize = custom_userSerializer(data=request.data)
-        print("I am below line 22")
         if serialize.is_valid():
             serialize.save()
             return Response(serialize.data, status=status.HTTP_201_CREATED)
